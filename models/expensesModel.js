@@ -12,11 +12,20 @@ const expensesSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: ["AI Tool", "Productivity", "Analytics", "Automation"], // Customize for your products
+    enum: [
+      "Food",
+      "Transportation",
+      "Entertainment",
+      "Utilities",
+      "Shopping",
+      "Healthcare",
+      "Education",
+      "Other",
+    ],
   },
   description: {
     type: String,
-    required: True,
+    required: true,
   },
 });
 

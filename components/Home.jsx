@@ -5,7 +5,7 @@ import ExpenseSummary from "./ExpenseSummary";
 import ExpenseChart from "./ExpenseChart";
 import RecentExpenses from "./RecentExpenses";
 import AddExpenseForm from "./AddExpenseForm";
-import ExpenseList from "./ExpenseList";
+import ExpenseList from "./expenses/ExpenseList";
 import Link from "next/link";
 
 const initialExpenses = [
