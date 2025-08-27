@@ -47,11 +47,13 @@ export default function ExpenseItem({ expense, onEdit, onDelete }) {
     "Other",
   ];
 
+  // Save edited expense and exit editing mode
   const handleSave = () => {
     onEdit(expense._id, form);
     setEditing(false);
   };
 
+  // Cancel editing and reset form to original expense values
   const handleCancel = () => {
     setForm({
       amount: expense.amount,

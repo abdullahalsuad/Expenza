@@ -1,77 +1,59 @@
 "use client";
 
-import React, { useState } from "react";
-import ExpenseSummary from "./ExpenseSummary";
-import ExpenseChart from "./ExpenseChart";
-import RecentExpenses from "./RecentExpenses";
-import AddExpenseForm from "./AddExpenseForm";
-import ExpenseList from "./expenses/ExpenseList";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import ExpenseChart from "./ExpenseChart";
+import ExpenseSummary from "./ExpenseSummary";
+import RecentExpenses from "./RecentExpenses";
+import Loading from "./loading/Loading";
 
-const initialExpenses = [
-  {
-    id: "1",
-    amount: 45.99,
-    category: "Food",
-    date: "2024-01-15",
-    description: "Grocery shopping",
-  },
-  {
-    id: "2",
-    amount: 120.0,
-    category: "Transportation",
-    date: "2024-01-14",
-    description: "Gas fill-up",
-  },
-  {
-    id: "3",
-    amount: 25.5,
-    category: "Entertainment",
-    date: "2024-01-13",
-    description: "Movie tickets",
-  },
-  {
-    id: "4",
-    amount: 89.99,
-    category: "Utilities",
-    date: "2024-01-12",
-    description: "Internet bill",
-  },
-  {
-    id: "5",
-    amount: 15.75,
-    category: "Food",
-    date: "2024-01-11",
-    description: "Coffee shop",
-  },
-];
+export default function Home() {
+  const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const Home = () => {
-  const [expenses, setExpenses] = useState(initialExpenses);
-  const [activeView, setActiveView] = useState("dashboard");
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const res = await fetch("/api/expenses");
+        if (!res.ok) throw new Error("Failed to fetch expenses");
+        const data = await res.json();
+        // Sort newest first
+        const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setExpenses(sorted);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        // Optionally show toast or keep empty state
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExpenses();
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
-    <>
-      <div className="space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <Link
-            href="/add-expense"
-            className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium"
-          >
-            Add Expense
-          </Link>
-        </div>
-
-        <ExpenseSummary expenses={expenses} />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <ExpenseChart expenses={expenses} />
-          <RecentExpenses expenses={expenses.slice(0, 5)} />
-        </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+        <Link
+          href="/add-expense"
+          className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium text-center"
+        >
+          Add Expense
+        </Link>
       </div>
-    </>
-  );
-};
 
-export default Home;
+      {/* Summary */}
+      <ExpenseSummary expenses={expenses} />
+
+      {/* Charts & Recent */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <ExpenseChart expenses={expenses} />
+        <RecentExpenses expenses={expenses.slice(0, 5)} />
+      </div>
+    </div>
+  );
+}

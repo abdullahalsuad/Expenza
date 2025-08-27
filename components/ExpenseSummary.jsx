@@ -1,33 +1,38 @@
-const ExpenseSummary = ({ expenses }) => {
-  const totalExpenses = expenses.reduce(
-    (sum, expense) => sum + expense.amount,
-    0
-  );
+import { Calendar1 } from "lucide-react";
+import { ChartLine } from "lucide-react";
+import { CreditCard } from "lucide-react";
+import React from "react";
+
+const ExpenseSummary = ({ expenses = [] }) => {
+  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
 
+  // Calculate total expenses for the current month
   const monthlyExpenses = expenses
-    .filter((expense) => {
-      const expenseDate = new Date(expense.date);
+    .filter((e) => {
+      const date = new Date(e.date);
       return (
-        expenseDate.getMonth() === currentMonth &&
-        expenseDate.getFullYear() === currentYear
+        date.getMonth() === currentMonth && date.getFullYear() === currentYear
       );
     })
-    .reduce((sum, expense) => sum + expense.amount, 0);
+    .reduce((sum, e) => sum + e.amount, 0);
 
-  const categories = expenses.reduce((acc, expense) => {
-    acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
+  // Aggregate expenses by category
+  const categories = expenses.reduce((acc, e) => {
+    acc[e.category] = (acc[e.category] || 0) + e.amount;
     return acc;
   }, {});
 
+  // Determine the top spending category
   const topCategory = Object.entries(categories).sort(
     ([, a], [, b]) => b - a
   )[0];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Total Expenses */}
       <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between">
           <div>
@@ -39,11 +44,14 @@ const ExpenseSummary = ({ expenses }) => {
             </p>
           </div>
           <div className="w-12 h-12 bg-chart-1/10 rounded-lg flex items-center justify-center">
-            <span className="text-2xl">💸</span>
+            <span className="text-2xl">
+              <CreditCard />
+            </span>
           </div>
         </div>
       </div>
 
+      {/* This Month */}
       <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between">
           <div>
@@ -55,11 +63,14 @@ const ExpenseSummary = ({ expenses }) => {
             </p>
           </div>
           <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center">
-            <span className="text-2xl">📅</span>
+            <span className="text-2xl">
+              <Calendar1 />
+            </span>
           </div>
         </div>
       </div>
 
+      {/* Top Category */}
       <div className="bg-card p-6 rounded-xl border border-border">
         <div className="flex items-center justify-between">
           <div>
@@ -74,7 +85,9 @@ const ExpenseSummary = ({ expenses }) => {
             </p>
           </div>
           <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center">
-            <span className="text-2xl">🏆</span>
+            <span className="text-2xl">
+              <ChartLine />
+            </span>
           </div>
         </div>
       </div>

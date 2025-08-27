@@ -1,12 +1,17 @@
-const ExpenseChart = ({ expenses }) => {
-  // Group expenses by category
-  const categoryData = expenses.reduce((acc, expense) => {
-    acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
+import React from "react";
+
+const ExpenseChart = ({ expenses = [] }) => {
+  // Aggregate expenses by category
+  const categoryData = expenses.reduce((acc, e) => {
+    acc[e.category] = (acc[e.category] || 0) + e.amount;
     return acc;
   }, {});
 
+  // Convert to array and sort categories by total amount (desc)
   const categories = Object.entries(categoryData).sort(([, a], [, b]) => b - a);
-  const maxAmount = Math.max(...Object.values(categoryData));
+
+  // Find the maximum category amount (used for charts/scaling)
+  const maxAmount = Math.max(...Object.values(categoryData), 1);
 
   const colors = [
     "bg-chart-1",
@@ -26,7 +31,6 @@ const ExpenseChart = ({ expenses }) => {
         {categories.map(([category, amount], index) => {
           const percentage = (amount / maxAmount) * 100;
           const colorClass = colors[index % colors.length];
-
           return (
             <div key={category} className="space-y-2">
               <div className="flex justify-between items-center">
@@ -39,7 +43,7 @@ const ExpenseChart = ({ expenses }) => {
               </div>
               <div className="w-full bg-muted rounded-full h-3">
                 <div
-                  className={`h-3 rounded-full ${colorClass} transition-all duration-500 ease-out`}
+                  className={`h-3 rounded-full ${colorClass}`}
                   style={{ width: `${percentage}%` }}
                 />
               </div>
