@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const AddExpenseForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -53,7 +53,7 @@ const AddExpenseForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-card p-8 rounded-xl border border-border">
+    <div className="w-8/12 mx-auto p-8 rounded-xl border border-border">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -149,20 +149,6 @@ const AddExpenseForm = ({ onSubmit }) => {
             className="flex-1 bg-primary text-primary-foreground py-3 px-6 rounded-lg font-medium hover:bg-primary/90 transition-colors"
           >
             Add Expense
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              setFormData({
-                amount: "",
-                category: "",
-                date: new Date().toISOString().split("T")[0],
-                description: "",
-              })
-            }
-            className="px-6 py-3 border border-border rounded-lg font-medium text-foreground hover:bg-muted transition-colors"
-          >
-            Clear
           </button>
         </div>
       </form>
