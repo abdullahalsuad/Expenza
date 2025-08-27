@@ -6,6 +6,7 @@ import { Toaster, toast } from "sonner";
 
 export default function AddExpenseForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
@@ -24,36 +25,44 @@ export default function AddExpenseForm() {
     "Other",
   ];
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    // Basic check
+    // Basic validation
     if (!formData.amount || !formData.category || !formData.description) {
       toast.warning("Please fill all required fields");
+      setIsSubmitting(false);
       return;
     }
 
-    // Send to API
-    const res = await fetch("/api/expenses", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (res.ok) {
-      router.refresh();
-
-      toast.success("Expense has been added");
-
-      // Reset form
-      setFormData({
-        amount: "",
-        category: "",
-        date: new Date().toISOString().split("T")[0],
-        description: "",
+    try {
+      // Send data to API
+      const res = await fetch("/api/expenses", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
       });
-    } else {
+
+      if (res.ok) {
+        router.refresh(); // Refresh data on page
+        toast.success("Expense has been added");
+
+        // Reset form
+        setFormData({
+          amount: "",
+          category: "",
+          date: new Date().toISOString().split("T")[0],
+          description: "",
+        });
+      } else {
+        toast.error("Failed to add expense");
+      }
+    } catch (error) {
       toast.error("Failed to add expense");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -132,9 +141,15 @@ export default function AddExpenseForm() {
         <div className="flex gap-4 pt-4">
           <button
             type="submit"
-            className="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 cursor-pointer"
+            disabled={isSubmitting} // Disable while submitting
+            className={`flex-1 py-3 rounded-lg font-medium text-white 
+              ${
+                isSubmitting
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-primary hover:bg-primary/90 cursor-pointer"
+              }`}
           >
-            Add Expense
+            {isSubmitting ? "Adding..." : "Add Expense"} {/* Loading text */}
           </button>
         </div>
       </form>

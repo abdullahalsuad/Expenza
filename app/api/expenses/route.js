@@ -27,7 +27,9 @@ export async function POST(request) {
   const expense = new expensesModel(body);
   const savedExpense = await expense.save();
 
+  // Revalidate page to refresh data
   revalidatePath("/all-expenses");
+
   // Return the saved expense as JSON with HTTP status 201 (Created)
   return new Response(JSON.stringify(savedExpense), {
     status: 201,
@@ -54,6 +56,9 @@ export async function DELETE(request) {
 
     // Delete the expense by ID
     await expensesModel.findByIdAndDelete(id);
+
+    // Revalidate page to refresh data
+    revalidatePath("/all-expenses");
 
     // Return success response
     return new Response(JSON.stringify({ message: "Expense deleted" }), {
@@ -100,6 +105,9 @@ export async function PUT(request) {
         headers: { "Content-Type": "application/json" },
       });
     }
+
+    // Revalidate page to refresh data
+    revalidatePath("/all-expenses");
 
     // Return the updated expense
     return new Response(JSON.stringify(updatedExpense), {
