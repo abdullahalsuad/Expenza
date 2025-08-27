@@ -1,6 +1,5 @@
 # Expenza - Full-Stack Expense Tracker
 
-
 **Expenza** is a modern, responsive **full-stack expense tracker** built with **Next.js 15**, **Tailwind CSS**, **MongoDB (Mongoose)**, **NextAuth.js**, and **Chart.js**. Track your daily and monthly expenses, categorize them, and visualize your spending patterns with sleek charts.
 
 ---
@@ -11,9 +10,9 @@
 
 ## 🖼 Screenshots
 
-![Dashboard](./public/screenshots/dashboard.png)
-![Add Expense Form](./public/screenshots/add-expense.png)
-![Expense List](./public/screenshots/expense-list.png)
+![Dashboard](./public/demo.png)
+![Expense List](./public/demo2.png)
+![Loading](./public/demo3.png)
 
 ## 🚀 Features
 
@@ -74,4 +73,3 @@ npm run dev
 
 ---
 
-## 🌟 Folder Structure
