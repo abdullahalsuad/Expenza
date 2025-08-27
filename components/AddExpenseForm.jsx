@@ -71,7 +71,7 @@ export default function AddExpenseForm() {
   };
 
   return (
-    <div className="w-8/12 mx-auto p-8 rounded-xl border border-border">
+    <div className="lg:w-8/12 mx-auto p-8 rounded-xl border border-border">
       {/* toast */}
       <Toaster position="top-right" expand={true} richColors />
       <form onSubmit={handleSubmit} className="space-y-6">

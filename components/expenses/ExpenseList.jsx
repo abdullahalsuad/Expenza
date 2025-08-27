@@ -4,12 +4,12 @@ import { useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import ExpenseFilter from "./ExpenseFilter";
 
-
 const ExpenseList = ({ expenses: initialExpenses }) => {
   const [expenses, setExpenses] = useState(initialExpenses);
   const [filterCategory, setFilterCategory] = useState("");
   const [sortBy, setSortBy] = useState("date");
 
+  // Delete an expense by ID and update local state
   const handleDelete = async (id) => {
     if (!confirm("Delete this expense?")) return;
 
@@ -20,10 +20,12 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
     });
 
     if (res.ok) {
+      // Remove deleted expense from state
       setExpenses((prev) => prev.filter((e) => e._id !== id));
     }
   };
 
+  // Edit an expense by ID, send update request, and update local state
   const handleEdit = async (id, updatedData) => {
     const res = await fetch("/api/expenses", {
       method: "PUT",
@@ -33,16 +35,18 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
 
     if (res.ok) {
       const updated = await res.json();
+      // Replace old expense with updated one
       setExpenses((prev) => prev.map((e) => (e._id === id ? updated : e)));
     }
   };
 
+  // Filter and sort expenses by category, amount, or date
   const filteredExpenses = expenses
     .filter((e) => !filterCategory || e.category === filterCategory)
     .sort((a, b) => {
-      if (sortBy === "amount") return b.amount - a.amount;
-      if (sortBy === "category") return a.category.localeCompare(b.category);
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      if (sortBy === "amount") return b.amount - a.amount; // Sort by amount (desc)
+      if (sortBy === "category") return a.category.localeCompare(b.category); // Sort alphabetically by category
+      return new Date(b.date).getTime() - new Date(a.date).getTime(); // Sort by latest date
     });
 
   return (

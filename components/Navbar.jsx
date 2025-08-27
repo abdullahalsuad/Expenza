@@ -1,15 +1,28 @@
 "use client";
 
+import { X } from "lucide-react";
+import { Menu } from "lucide-react";
+import { PlusCircle, BanknoteArrowDown, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-export default function Navbar({ activeView, setActiveView }) {
+export default function Navbar() {
+  const pathname = usePathname(); // Get current route
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: "/", label: "Dashboard", icon: "📊" },
-    { id: "/add-expense", label: "Add Expense", icon: "➕" },
-    { id: "/all-expenses", label: "All Expenses", icon: "📋" },
+    { id: "/", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    {
+      id: "/add-expense",
+      label: "Add Expense",
+      icon: <PlusCircle size={20} />,
+    },
+    {
+      id: "/all-expenses",
+      label: "All Expenses",
+      icon: <BanknoteArrowDown size={20} />,
+    },
   ];
 
   return (
@@ -32,14 +45,15 @@ export default function Navbar({ activeView, setActiveView }) {
               <Link
                 key={item.id}
                 href={item.id}
-                onClick={() => setActiveView(item.id)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  activeView === item.id
-                    ? "bg-primary text-primary-foreground cursor-pointer"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
-                }`}
+                className={`flex px-4 py-2 rounded-lg font-medium transition-colors gap-2 items-center
+                  ${
+                    pathname === item.id
+                      ? "text-blue-900 font-extrabold"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }
+                `}
               >
-                <span className="mr-2">{item.icon}</span>
+                {item.icon}
                 {item.label}
               </Link>
             ))}
@@ -49,29 +63,9 @@ export default function Navbar({ activeView, setActiveView }) {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-expanded={isMobileMenuOpen}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isMobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
 
@@ -83,17 +77,16 @@ export default function Navbar({ activeView, setActiveView }) {
                 <Link
                   key={item.id}
                   href={item.id}
-                  onClick={() => {
-                    setActiveView(item.id);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`px-4 py-3 rounded-lg font-medium transition-colors text-left ${
-                    activeView === item.id
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex px-4 py-3 rounded-lg font-medium transition-colors gap-2 items-center
+                    ${
+                      pathname === item.id
+                        ? "text-blue-900 font-extrabold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }
+                  `}
                 >
-                  <span className="mr-2">{item.icon}</span>
+                  {item.icon}
                   {item.label}
                 </Link>
               ))}
