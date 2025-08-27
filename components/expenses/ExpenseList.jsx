@@ -4,8 +4,10 @@ import { useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import ExpenseFilter from "./ExpenseFilter";
 import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const ExpenseList = ({ expenses: initialExpenses }) => {
+  const router = useRouter();
   const [expenses, setExpenses] = useState(initialExpenses);
   const [filterCategory, setFilterCategory] = useState("");
   const [sortBy, setSortBy] = useState("date");
@@ -23,6 +25,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
     if (res.ok) {
       // Remove deleted expense from state
       toast.success("Expense successfully deleted");
+      router.refresh();
       setExpenses((prev) => prev.filter((e) => e._id !== id));
     }
   };
@@ -39,6 +42,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
       const updated = await res.json();
       // Replace old expense with updated one
       toast.success("Expense successfully  updated");
+      router.refresh();
       setExpenses((prev) => prev.map((e) => (e._id === id ? updated : e)));
     }
   };

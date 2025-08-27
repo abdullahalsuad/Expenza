@@ -132,7 +132,7 @@ export default function AddExpenseForm() {
         <div className="flex gap-4 pt-4">
           <button
             type="submit"
-            className="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90"
+            className="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 cursor-pointer"
           >
             Add Expense
           </button>
