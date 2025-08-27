@@ -1,20 +1,11 @@
 "use client";
 
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
 
-// ...
-
-function App() {
-  return (
-    <div>
-      <Toaster />
-      <button onClick={() => toast("My first toast")}>Give me a toast</button>
-    </div>
-  );
-}
-
 export default function AddExpenseForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
@@ -50,9 +41,9 @@ export default function AddExpenseForm() {
     });
 
     if (res.ok) {
-      const saved = await res.json();
+      router.refresh();
+
       toast.success("Expense has been added");
-      console.log("Expense added:", saved);
 
       // Reset form
       setFormData({

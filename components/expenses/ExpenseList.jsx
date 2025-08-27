@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import ExpenseFilter from "./ExpenseFilter";
+import { Toaster, toast } from "sonner";
 
 const ExpenseList = ({ expenses: initialExpenses }) => {
   const [expenses, setExpenses] = useState(initialExpenses);
@@ -21,6 +22,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
 
     if (res.ok) {
       // Remove deleted expense from state
+      toast.success("Expense successfully deleted");
       setExpenses((prev) => prev.filter((e) => e._id !== id));
     }
   };
@@ -36,6 +38,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
     if (res.ok) {
       const updated = await res.json();
       // Replace old expense with updated one
+      toast.success("Expense successfully  updated");
       setExpenses((prev) => prev.map((e) => (e._id === id ? updated : e)));
     }
   };
@@ -51,6 +54,8 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
 
   return (
     <div className="space-y-6">
+      {/* toast */}
+      <Toaster position="top-right" expand={true} richColors />
       <ExpenseFilter
         filterCategory={filterCategory}
         setFilterCategory={setFilterCategory}

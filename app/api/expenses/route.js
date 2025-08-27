@@ -1,7 +1,8 @@
 import { expensesModel } from "@/models/expensesModel";
 import { dbConnect } from "@/service/mongo";
+import { revalidatePath } from "next/cache";
 
-// API route to handle fetching all expense entries
+//* API route to handle fetching all expense entries
 export async function GET() {
   // Establish a connection with the database
   await dbConnect();
@@ -16,7 +17,7 @@ export async function GET() {
   });
 }
 
-// API route to handle creating a new expense entry
+//* API route to handle creating a new expense entry
 export async function POST(request) {
   // Establish a connection with the database
   await dbConnect();
@@ -26,6 +27,7 @@ export async function POST(request) {
   const expense = new expensesModel(body);
   const savedExpense = await expense.save();
 
+  revalidatePath("/all-expenses");
   // Return the saved expense as JSON with HTTP status 201 (Created)
   return new Response(JSON.stringify(savedExpense), {
     status: 201,
@@ -33,7 +35,7 @@ export async function POST(request) {
   });
 }
 
-// API route to handle deleting an expense by ID
+//* API route to handle deleting an expense by ID
 export async function DELETE(request) {
   try {
     // Establish a connection with the database
@@ -67,7 +69,7 @@ export async function DELETE(request) {
   }
 }
 
-// API route to handle updating an expense
+//* API route to handle updating an expense
 export async function PUT(request) {
   try {
     // Establish a connection with the database
