@@ -1,17 +1,13 @@
+# Expenza - Full-Stack Expense Tracker
 
-ExpenseFlow - Full-Stack Expense Tracker
----
 
-# 💰 ExpenseFlow
-
-**ExpenseFlow** is a modern, responsive **full-stack expense tracker** built with **Next.js 15**, **Tailwind CSS**, **MongoDB (Mongoose)**, **NextAuth.js**, and **Chart.js**. Track your daily and monthly expenses, categorize them, and visualize your spending patterns with sleek charts.
+**Expenza** is a modern, responsive **full-stack expense tracker** built with **Next.js 15**, **Tailwind CSS**, **MongoDB (Mongoose)**, **NextAuth.js**, and **Chart.js**. Track your daily and monthly expenses, categorize them, and visualize your spending patterns with sleek charts.
 
 ---
 
 ## 🔗 Live Demo
-[ Visit Live Demo](https://your-vercel-deployment-link.vercel.app)
 
-
+[ Visit Live Demo](https://expenza-ebon.vercel.app/)
 
 ## 🖼 Screenshots
 
@@ -21,36 +17,37 @@ ExpenseFlow - Full-Stack Expense Tracker
 
 ## 🚀 Features
 
-- **Dashboard**: View total expenses, monthly breakdown chart, and recent transactions.  
-- **Add Expenses**: Easily add new expenses with amount, category, date, and description.  
-- **Expense List**: View all expenses with edit and delete options.  
-- **Authentication**: Secure login/signup using **NextAuth.js**.  
-- **Responsive Design**: Fully mobile, tablet, and desktop-friendly.  
-- **Charts**: Visualize monthly spending using **Chart.js**.  
-- **Filter & Search**: Optional filters for category and date ranges.  
+- **Dashboard**: View total expenses, monthly breakdown chart, and recent transactions.
+- **Add Expenses**: Easily add new expenses with amount, category, date, and description.
+- **Expense List**: View all expenses with edit and delete options.
+- **Authentication**: Secure login/signup using **NextAuth.js**.
+- **Responsive Design**: Fully mobile, tablet, and desktop-friendly.
+- **Charts**: Visualize monthly spending using **Chart.js**.
+- **Filter & Search**: Optional filters for category and date ranges.
 
 ---
 
 ## 🛠 Tech Stack
 
-| Technology | Badge |
-|------------|-------|
-| Next.js 15 | ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js) |
+| Technology   | Badge                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| Next.js 15   | ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js)                 |
 | Tailwind CSS | ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-blue?style=for-the-badge&logo=tailwind-css) |
-| MongoDB | ![MongoDB](https://img.shields.io/badge/MongoDB-green?style=for-the-badge&logo=mongodb) |
-| Mongoose | ![Mongoose](https://img.shields.io/badge/Mongoose-red?style=for-the-badge) |
-| NextAuth.js | ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-black?style=for-the-badge) |
-| Chart.js | ![Chart.js](https://img.shields.io/badge/Chart.js-orange?style=for-the-badge&logo=chart.js) |
+| MongoDB      | ![MongoDB](https://img.shields.io/badge/MongoDB-green?style=for-the-badge&logo=mongodb)                 |
+| Mongoose     | ![Mongoose](https://img.shields.io/badge/Mongoose-red?style=for-the-badge)                              |
+| NextAuth.js  | ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-black?style=for-the-badge)                      |
+| Chart.js     | ![Chart.js](https://img.shields.io/badge/Chart.js-orange?style=for-the-badge&logo=chart.js)             |
 
 ---
 
 ## 📦 Installation
 
 1. **Clone the repo:**
+
 ```bash
-git clone https://github.com/yourusername/expenseflow.git
-cd expenseflow
-````
+git clone https://github.com/yourusername/Expenza.git
+cd Expenza
+```
 
 2. **Install dependencies:**
 
@@ -77,14 +74,4 @@ npm run dev
 
 ---
 
-
 ## 🌟 Folder Structure
-
-
-
-
-
-
-
-
-
