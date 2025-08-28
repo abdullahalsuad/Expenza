@@ -2,8 +2,16 @@ import ExpenseList from "@/components/expenses/ExpenseList";
 import Link from "next/link";
 import { dbConnect } from "@/service/mongo";
 import { expensesModel } from "@/models/expensesModel";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function AllExpensesPage() {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   // Connect to DB and fetch expenses
   await dbConnect();
   const expenses = await expensesModel.find({});

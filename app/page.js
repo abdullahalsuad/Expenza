@@ -1,9 +1,18 @@
+import { auth } from "@/auth";
 import Home from "@/components/Home";
+import { redirect } from "next/navigation";
 
-export default function page() {
+const page = async () => {
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <>
       <Home />
     </>
   );
-}
+};
+
+export default page;

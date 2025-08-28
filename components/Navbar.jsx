@@ -6,8 +6,14 @@ import { PlusCircle, BanknoteArrowDown, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
+import { User } from "lucide-react";
+import { LogOut } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+
   const pathname = usePathname(); // Get current route
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -57,6 +63,36 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
+
+            {/* login */}
+            {status === "authenticated" ? (
+              // Show profile image and logout when logged in
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={session.user?.image || "https://via.placeholder.com/32"}
+                  alt="Profile"
+                  width={600}
+                  height={600}
+                  className="w-8 h-8 rounded-full border border-teal-400 cursor-pointer"
+                />
+
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-black/80 b  hover:text-red-500 cursor-pointer"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              // Show login button if not authenticated and sideMenu is enabled
+
+              <button className="bg-white text-slate-900 hover:bg-gray-200 text-sm font-medium hidden md:flex">
+                <Link href="/login" className="flex items-center">
+                  <User className="w-4 h-4 mr-2" />
+                  Login
+                </Link>
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}

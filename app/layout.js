@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { dbConnect } from "@/service/mongo";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +27,10 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">{children}</main>
+        <SessionProvider>
+          <Navbar />
+          <main className="container mx-auto px-4 py-8">{children}</main>
+        </SessionProvider>
       </body>
     </html>
   );
