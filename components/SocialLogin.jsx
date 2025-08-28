@@ -8,7 +8,7 @@ const SocialLogin = () => {
     signIn("google", { callbackUrl: "/" });
   };
   return (
-    <div className="w-6/12 mx-auto text-center mt-10">
+    <div className="lg:w-6/12 mx-auto text-center mt-10">
       <div className="grid place-items-center">
         <button
           onClick={handleAuth}

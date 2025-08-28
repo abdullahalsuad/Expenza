@@ -65,7 +65,7 @@ export default function Navbar() {
             ))}
 
             {/* login */}
-            {status === "authenticated" ? (
+            {status === "authenticated" && (
               // Show profile image and logout when logged in
               <div className="flex items-center space-x-3">
                 <Image
@@ -83,15 +83,6 @@ export default function Navbar() {
                   <LogOut className="w-5 h-5" />
                 </button>
               </div>
-            ) : (
-              // Show login button if not authenticated and sideMenu is enabled
-
-              <button className="bg-blue-900 text-white hover:bg-gray-200 text-sm font-medium hidden md:flex px-4 py-2 rounded-md ">
-                <Link href="/login" className="flex items-center">
-                  <User className="w-4 h-4 mr-2" />
-                  Login
-                </Link>
-              </button>
             )}
           </div>
 
@@ -127,6 +118,27 @@ export default function Navbar() {
                 </Link>
               ))}
             </div>
+
+            {/* login */}
+            {status === "authenticated" && (
+              // Show profile image and logout when logged in
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={session.user?.image || "https://via.placeholder.com/32"}
+                  alt="Profile"
+                  width={600}
+                  height={600}
+                  className="w-8 h-8 rounded-full border border-teal-400 cursor-pointer"
+                />
+
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-black/80 b  hover:text-red-500 cursor-pointer"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
