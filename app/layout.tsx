@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { dbConnect } from "@/service/mongo";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +28,17 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <SessionProvider>
-          <Navbar />
-          <main className="container mx-auto px-4 py-8">{children}</main>
-        </SessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <Navbar />
+            <main className="container mx-auto px-4 py-8">{children}</main>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

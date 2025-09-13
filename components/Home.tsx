@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import ExpenseChart from "./ExpenseChart";
-import ExpenseSummary from "./ExpenseSummary";
+import ExpenseChart from "./home/ExpenseChart";
 import RecentExpenses from "./RecentExpenses";
 import Loading from "./loading/Loading";
+import ExpenseSummary from "./home/ExpenseSummary";
 
 interface Expense {
   amount: number;
@@ -25,7 +25,10 @@ export default function Home() {
         if (!res.ok) throw new Error("Failed to fetch expenses");
         const data = await res.json();
         // Sort newest first
-        const sorted = data.sort((a: Expense, b: Expense) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        const sorted = data.sort(
+          (a: Expense, b: Expense) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
         setExpenses(sorted);
       } catch (err) {
         console.error("Fetch error:", err);

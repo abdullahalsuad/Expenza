@@ -54,7 +54,7 @@ const RecentExpenses = ({ expenses = [] }) => {
               className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
             >
               <div className="flex items-center gap-3">
-                <div className=" w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                <div className=" w-10 h-10 bg-gray-200 dark:bg-gray-500 rounded-lg flex items-center justify-center">
                   <span className="text-lg">
                     {getCategoryIcon(expense.category)}
                   </span>

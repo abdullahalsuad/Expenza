@@ -2,14 +2,13 @@
 
 import { X } from "lucide-react";
 import { Menu } from "lucide-react";
-import { PlusCircle, BanknoteArrowDown, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
-import { User } from "lucide-react";
 import { LogOut } from "lucide-react";
 import Image from "next/image";
+import { ModeToggle } from "./home/ModeToggle";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -18,16 +17,14 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: "/", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    { id: "/", label: "Dashboard" },
     {
       id: "/add-expense",
       label: "Add Expense",
-      icon: <PlusCircle size={20} />,
     },
     {
       id: "/all-expenses",
       label: "All Expenses",
-      icon: <BanknoteArrowDown size={20} />,
     },
   ];
 
@@ -59,7 +56,6 @@ export default function Navbar() {
                   }
                 `}
               >
-                {item.icon}
                 {item.label}
               </Link>
             ))}
@@ -84,6 +80,8 @@ export default function Navbar() {
                 </button>
               </div>
             )}
+
+            <ModeToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,7 +111,6 @@ export default function Navbar() {
                     }
                   `}
                 >
-                  {item.icon}
                   {item.label}
                 </Link>
               ))}

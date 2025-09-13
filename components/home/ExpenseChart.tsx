@@ -1,4 +1,5 @@
 import React from "react";
+import ExpenseProgressItem from "./ExpenseProgressItem";
 
 interface Expense {
   category: string;
@@ -13,7 +14,9 @@ const ExpenseChart = ({ expenses = [] }: { expenses: Expense[] }) => {
   }, {} as Record<string, number>);
 
   // Convert to array and sort categories by total amount (desc)
-  const categories = Object.entries(categoryData).sort(([, a], [, b]) => (b as number) - (a as number));
+  const categories = Object.entries(categoryData).sort(
+    ([, a], [, b]) => (b as number) - (a as number)
+  );
 
   // Find the maximum category amount (used for charts/scaling)
   const maxAmount = Math.max(...Object.values(categoryData), 1);
@@ -37,22 +40,13 @@ const ExpenseChart = ({ expenses = [] }: { expenses: Expense[] }) => {
           const percentage = ((amount as number) / maxAmount) * 100;
           const colorClass = colors[index % colors.length];
           return (
-            <div key={category} className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-foreground">
-                  {category}
-                </span>
-                <span className="text-sm font-semibold text-foreground">
-                  ${(amount as number).toFixed(2)}
-                </span>
-              </div>
-              <div className="w-full bg-muted rounded-full h-3">
-                <div
-                  className={`h-3 rounded-full ${colorClass}`}
-                  style={{ width: `${percentage}%` }}
-                />
-              </div>
-            </div>
+            <ExpenseProgressItem
+              key={category}
+              category={category}
+              amount={amount as number}
+              percentage={percentage}
+              colorClass={colorClass}
+            />
           );
         })}
       </div>
