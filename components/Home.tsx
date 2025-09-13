@@ -7,8 +7,15 @@ import ExpenseSummary from "./ExpenseSummary";
 import RecentExpenses from "./RecentExpenses";
 import Loading from "./loading/Loading";
 
+interface Expense {
+  amount: number;
+  date: string;
+  category: string;
+  description: string;
+}
+
 export default function Home() {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +25,7 @@ export default function Home() {
         if (!res.ok) throw new Error("Failed to fetch expenses");
         const data = await res.json();
         // Sort newest first
-        const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sorted = data.sort((a: Expense, b: Expense) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setExpenses(sorted);
       } catch (err) {
         console.error("Fetch error:", err);

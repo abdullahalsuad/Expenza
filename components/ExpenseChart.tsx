@@ -1,14 +1,19 @@
 import React from "react";
 
-const ExpenseChart = ({ expenses = [] }) => {
+interface Expense {
+  category: string;
+  amount: number;
+}
+
+const ExpenseChart = ({ expenses = [] }: { expenses: Expense[] }) => {
   // Aggregate expenses by category
-  const categoryData = expenses.reduce((acc, e) => {
+  const categoryData: Record<string, number> = expenses.reduce((acc, e) => {
     acc[e.category] = (acc[e.category] || 0) + e.amount;
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 
   // Convert to array and sort categories by total amount (desc)
-  const categories = Object.entries(categoryData).sort(([, a], [, b]) => b - a);
+  const categories = Object.entries(categoryData).sort(([, a], [, b]) => (b as number) - (a as number));
 
   // Find the maximum category amount (used for charts/scaling)
   const maxAmount = Math.max(...Object.values(categoryData), 1);
@@ -29,7 +34,7 @@ const ExpenseChart = ({ expenses = [] }) => {
 
       <div className="space-y-4">
         {categories.map(([category, amount], index) => {
-          const percentage = (amount / maxAmount) * 100;
+          const percentage = ((amount as number) / maxAmount) * 100;
           const colorClass = colors[index % colors.length];
           return (
             <div key={category} className="space-y-2">
@@ -38,7 +43,7 @@ const ExpenseChart = ({ expenses = [] }) => {
                   {category}
                 </span>
                 <span className="text-sm font-semibold text-foreground">
-                  ${amount.toFixed(2)}
+                  ${(amount as number).toFixed(2)}
                 </span>
               </div>
               <div className="w-full bg-muted rounded-full h-3">

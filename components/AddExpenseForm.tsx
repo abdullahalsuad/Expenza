@@ -132,7 +132,7 @@ export default function AddExpenseForm() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            rows="3"
+            rows={3}
             className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring outline-none resize-none"
             placeholder="Enter description..."
           />

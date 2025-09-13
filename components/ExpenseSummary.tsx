@@ -3,7 +3,13 @@ import { ChartLine } from "lucide-react";
 import { CreditCard } from "lucide-react";
 import React from "react";
 
-const ExpenseSummary = ({ expenses = [] }) => {
+interface Expense {
+  amount: number;
+  date: string;
+  category: string;
+}
+
+const ExpenseSummary = ({ expenses = [] }: { expenses: Expense[] }) => {
   const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   const currentMonth = new Date().getMonth();
@@ -20,14 +26,14 @@ const ExpenseSummary = ({ expenses = [] }) => {
     .reduce((sum, e) => sum + e.amount, 0);
 
   // Aggregate expenses by category
-  const categories = expenses.reduce((acc, e) => {
+  const categories: Record<string, number> = expenses.reduce((acc, e) => {
     acc[e.category] = (acc[e.category] || 0) + e.amount;
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 
   // Determine the top spending category
   const topCategory = Object.entries(categories).sort(
-    ([, a], [, b]) => b - a
+    ([, a], [, b]) => (b as number) - (a as number)
   )[0];
 
   return (
@@ -81,7 +87,7 @@ const ExpenseSummary = ({ expenses = [] }) => {
               {topCategory?.[0] || "None"}
             </p>
             <p className="text-sm text-muted-foreground">
-              ${topCategory?.[1]?.toFixed(2) || "0.00"}
+              ${((topCategory?.[1] as number) || 0).toFixed(2)}
             </p>
           </div>
           <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center">
