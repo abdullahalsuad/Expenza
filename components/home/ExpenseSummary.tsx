@@ -33,14 +33,14 @@ const ExpenseSummary = ({ expenses = [] }: { expenses: Expense[] }) => {
         title="Total Expenses"
         value={`$${totalExpenses.toFixed(2)}`}
         icon={<CreditCard />}
-        iconBgColor="bg-chart-1/10"
+        iconBgColor="bg-teal-300/50"
       />
 
       <StatsCard
         title="This Month"
         value={`$${monthlyExpenses.toFixed(2)}`}
         icon={<Calendar1 />}
-        iconBgColor="bg-chart-2/10"
+        iconBgColor="bg-teal-300/50"
       />
 
       <StatsCard
@@ -48,7 +48,7 @@ const ExpenseSummary = ({ expenses = [] }: { expenses: Expense[] }) => {
         value={topCategory?.[0] || "None"}
         subValue={`$${((topCategory?.[1] as number) || 0).toFixed(2)}`}
         icon={<ChartLine />}
-        iconBgColor="bg-chart-3/10"
+        iconBgColor="bg-teal-300/50"
       />
     </div>
   );

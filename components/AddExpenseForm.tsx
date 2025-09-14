@@ -3,6 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AddExpenseForm() {
   const router = useRouter();
@@ -25,12 +35,18 @@ export default function AddExpenseForm() {
     "Other",
   ];
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Basic validation
     if (!formData.amount || !formData.category || !formData.description) {
       toast.warning("Please fill all required fields");
       setIsSubmitting(false);
@@ -38,7 +54,6 @@ export default function AddExpenseForm() {
     }
 
     try {
-      // Send data to API
       const res = await fetch("/api/expenses", {
         method: "POST",
         body: JSON.stringify(formData),
@@ -46,10 +61,8 @@ export default function AddExpenseForm() {
       });
 
       if (res.ok) {
-        router.refresh(); // Refresh data on page
+        router.refresh();
         toast.success("Expense has been added");
-
-        // Reset form
         setFormData({
           amount: "",
           category: "",
@@ -59,22 +72,19 @@ export default function AddExpenseForm() {
       } else {
         toast.error("Failed to add expense");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to add expense");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   return (
-    <div className="lg:w-8/12 mx-auto p-8 rounded-xl border border-border">
-      {/* toast */}
-      <Toaster position="top-right" expand={true} richColors />
+    <div className="lg:w-8/12 mx-auto p-8 rounded-xl border border-border bg-white dark:bg-gray-900 dark:border-gray-700 transition-colors">
+      <Toaster position="top-right" expand richColors />
+
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Amount & Category */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium mb-2">Amount *</label>
@@ -82,14 +92,14 @@ export default function AddExpenseForm() {
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                 $
               </span>
-              <input
+              <Input
                 type="number"
                 name="amount"
                 value={formData.amount}
                 onChange={handleChange}
                 step="0.01"
                 min="0"
-                className="w-full pl-8 pr-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring outline-none"
+                className="pl-8"
                 placeholder="0.00"
               />
             </div>
@@ -97,60 +107,67 @@ export default function AddExpenseForm() {
 
           <div>
             <label className="block text-sm font-medium mb-2">Category *</label>
-            <select
+            <Select
               name="category"
               value={formData.category}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring outline-none"
+              onValueChange={(val) =>
+                setFormData({ ...formData, category: val })
+              }
             >
-              <option value="">Select category</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
+        {/* Date */}
         <div>
           <label className="block text-sm font-medium mb-2">Date</label>
-          <input
+          <Input
             type="date"
             name="date"
             value={formData.date}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring outline-none"
+            min={new Date().toISOString().split("T")[0]} // block past dates
           />
         </div>
 
+        {/* Description */}
         <div>
           <label className="block text-sm font-medium mb-2">
             Description *
           </label>
-          <textarea
+          <Textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows={3}
-            className="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring outline-none resize-none"
+            className="resize-none"
             placeholder="Enter description..."
           />
         </div>
 
+        {/* Submit */}
         <div className="flex gap-4 pt-4">
-          <button
+          <Button
             type="submit"
-            disabled={isSubmitting} // Disable while submitting
-            className={`flex-1 py-3 rounded-lg font-medium text-white 
-              ${
-                isSubmitting
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-primary hover:bg-primary/90 cursor-pointer"
-              }`}
+            className={`flex-1 cursor-pointer ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-primary hover:bg-primary/90"
+            }`}
+            disabled={isSubmitting}
           >
-            {isSubmitting ? "Adding..." : "Add Expense"} {/* Loading text */}
-          </button>
+            {isSubmitting ? "Adding..." : "Add Expense"}
+          </Button>
         </div>
       </form>
     </div>

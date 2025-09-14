@@ -30,7 +30,7 @@ const ExpenseChart = ({ expenses = [] }: { expenses: Expense[] }) => {
   ];
 
   return (
-    <div className="bg-card p-6 rounded-xl border border-border">
+    <div className="bg-card p-6 rounded-xl border border-border dark:bg-gray-900 dark:border-gray-700">
       <h3 className="text-xl font-semibold text-foreground mb-6">
         Expenses by Category
       </h3>

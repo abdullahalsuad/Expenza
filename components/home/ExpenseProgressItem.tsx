@@ -12,7 +12,7 @@ const ExpenseProgressItem = ({
   colorClass,
 }: ExpenseProgressItemProps) => {
   return (
-    <div key={category} className="space-y-2">
+    <div key={category} className="space-y-2 ">
       <div className="flex justify-between items-center">
         <span className="text-sm font-medium text-foreground">{category}</span>
         <span className="text-sm font-semibold text-foreground">

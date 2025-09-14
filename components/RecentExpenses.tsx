@@ -1,11 +1,14 @@
-import { Soup } from "lucide-react";
-import { Car } from "lucide-react";
-import { Package } from "lucide-react";
-import { GraduationCap } from "lucide-react";
-import { SquareActivity } from "lucide-react";
-import { ShoppingCart } from "lucide-react";
-import { Zap } from "lucide-react";
-import { Clapperboard } from "lucide-react";
+import { formatDate } from "@/utils/date";
+import {
+  Car,
+  Clapperboard,
+  GraduationCap,
+  Package,
+  ShoppingCart,
+  Soup,
+  SquareActivity,
+  Zap,
+} from "lucide-react";
 
 const RecentExpenses = ({ expenses = [] }) => {
   // Return corresponding icon component for a given category
@@ -23,21 +26,8 @@ const RecentExpenses = ({ expenses = [] }) => {
     return icons[category] || icons["Other"];
   };
 
-  // Format a date string as "Mon DD" (e.g., "Aug 28")
-  const formatDate = (dateString) => {
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-    } catch (error) {
-      return "Invalid Date";
-    }
-  };
-
   return (
-    <div className="bg-card p-6 rounded-xl border border-border">
+    <div className="bg-card p-6 rounded-xl border border-border dark:bg-gray-900 dark:border-gray-700">
       <h3 className="text-xl font-semibold text-foreground mb-6">
         Recent Expenses
       </h3>

@@ -57,7 +57,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
     });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       {/* toast */}
       <Toaster position="top-right" expand={true} richColors />
       <ExpenseFilter
@@ -67,7 +67,7 @@ const ExpenseList = ({ expenses: initialExpenses }) => {
         setSortBy={setSortBy}
       />
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden dark:bg-gray-900 dark:border-gray-700">
         {filteredExpenses.length === 0 ? (
           <div className="p-8 text-center">
             <p className="text-muted-foreground">No expenses found</p>

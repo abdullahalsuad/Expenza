@@ -17,7 +17,7 @@ const StatsCard = ({
   iconBgColor = "bg-gray-100",
 }: StatsCardProps) => {
   return (
-    <Card className="rounded-xl border border-border h-40">
+    <Card className="rounded-xl border border-border h-40 dark:bg-gray-900 dark:border-gray-700">
       <CardContent className="flex items-center justify-between p-6">
         <div>
           <p className="text-muted-foreground text-sm font-medium">{title}</p>
