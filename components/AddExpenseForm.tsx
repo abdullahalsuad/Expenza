@@ -6,6 +6,7 @@ import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import expensesModule from "@/modules/expenses";
 import {
   Select,
   SelectTrigger,
@@ -54,11 +55,7 @@ export default function AddExpenseForm() {
     }
 
     try {
-      const res = await fetch("/api/expenses", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await expensesModule.postData(formData);
 
       if (res.ok) {
         router.refresh();
